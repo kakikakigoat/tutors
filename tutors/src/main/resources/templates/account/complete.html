@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>TUTORSユーザー登録</title>
+<meta name="viewport" content="width=divece-width,initial-scale=1.0">
+<link
+	href="https://fonts.googleapis.com/css?family=Montserrat&display=swap"
+	rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css"
+	integrity="sha256-UzFD2WYH2U1dQpKDjjZK72VtPeWP50NoJjd26rnAdUI="
+	crossorigin="anonymous" />
+<script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
+<script>
+$(function(){
+	//ヘッダー
+	$(".headC").click(function(){
+		$(".headB").slideToggle();
+	});
+});
+</script>
+</head>
+<body>
+	<header class="header">
+		<div class="container">
+			<div class="container-small">
+				<a th:href="@{../index}" class="headA">TUTORS</a>
+				<button type="button" class="headC">
+					<span class="fa fa-bars" title="MENU"></span>
+				</button>
+			</div>
+			<nav class="headB">
+				<ul>
+					<li><a th:href="@{../index}">トップ</a></li>
+					<li><a th:href="@{../signUp}" class="signup-show">新規登録</a></li>
+					<li><a th:href="@{../login}" class="login-show">ログイン</a></li>
+				</ul>
+			</nav>
+		</div>
+	</header>
+	<div class="signUp-complete-wrapper">
+		<div class="signUp-complete-container">
+			<h1>TUTORSへの登録が完了しました!</h1>
+			<a  class="login-btn" th:href="@{/login}">ログイン</a>
+		</div>
+	</div>
+	<footer th:include="login/index::footer"></footer>
+</body>
+</html>

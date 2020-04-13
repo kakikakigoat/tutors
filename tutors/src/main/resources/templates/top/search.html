@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="_csrf" th:content="${_csrf.token}"/>
+<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+<title>教師検索</title>
+<link
+	href="https://fonts.googleapis.com/css?family=Montserrat&display=swap"
+	rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css"
+	integrity="sha256-UzFD2WYH2U1dQpKDjjZK72VtPeWP50NoJjd26rnAdUI="
+	crossorigin="anonymous" />
+<script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
+</head>
+<body th:with="user=${#authentication.principal.user}">
+	<header class="header" th:insert="top/top::top-header(${user})"></header>
+	<div class="top-wrapper">
+		<div class="search-form-wrapper">
+			<h2 class="search-form-header">教師を検索する</h2>
+			<form th:action="@{/top/search}" th:object="${form}" method="get">
+				<div class="search-form">
+					<div class="search-form-item">
+						<p>教科で検索</p>
+						<div class="select-box">
+							<select id="subject" name="subject">
+								<option value="" selected>選択してください</option>
+								<option th:each="subject : ${subjectList}"
+									th:value="${subject.subjectId}"
+									th:text="${subject.subjectName}"></option>
+							</select>
+						</div>
+					</div>
+					<div class="search-form-item">
+						<p>地域で検索</p>
+						<div class="search-form-item-after">
+							<div class="select-box">
+								<select id="region" name="region">
+									<option value="" selected>選択してください</option>
+									<option th:each="region : ${regionList}"
+										th:value="${region.regionId}" th:text="${region.regionName}"></option>
+								</select>
+							</div>
+							<div class="submit-btn">
+								<input type="submit" value="検索" />
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+		<h2 class="search-result">検索結果</h2>
+		<div th:each="teacher:${teacherList}" class="teacher-card">
+			<div class="teacher-card-left">
+				<a th:href="@{'/profile/'+${teacher.teacherUserId}}"> <img
+					th:src="@{'/image/'+${teacher.teacherUserId}}"
+					class="teacher-card-image" />
+				</a>
+			</div>
+			<div class="teacher-card-middle">
+				<div class="teacher-card-middle-top">
+					<a th:href="@{'/profile/'+${teacher.teacherUserId}}"
+						th:text="${teacher.user.userName}"></a>
+					<ul class="teacher-subject-tag-list">
+						<th:block th:each="subject:*{teacher.user.subjects}">
+							<li th:text="${subject?.subjectName}" class="teacher-subject-tag"></li>
+						</th:block>
+					</ul>
+				</div>
+				<div class="teacher-card-middle-center">
+					<p th:text="${teacher.user.selfIntroduction}"></p>
+				</div>
+				<div class="teacher-card-middle-bottom">
+					<span>地域:</span><p th:text="${teacher.user.region.regionName}"></p>
+					<span>時給:</span><p th:text="${teacher.minWage}+'円〜'"></p>
+					<div class="teacher-card-message-btn-wrapper">
+						<div class="teacher-card-message-btn">
+							メッセージを送る <a
+								th:href="@{'/profile/'+${teacher?.teacherUserId}+'/message'}"></a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="teacher-card-right">
+			<p>指導可能な日程</p>
+				<table>
+					<tr th:each="lessonMenu:*{teacher.user.lessonMenus}">
+						<td th:text="${lessonMenu?.id.dayOfTheWeek}"></td>
+						<td th:text="${lessonMenu?.lessonMenuStartTime}+' 〜 '"></td>
+						<td th:text="${lessonMenu?.lessonMenuEndTime}"></td>
+					</tr>
+
+				</table>
+			</div>
+		</div>
+		<p th:text="${msg}"></p>
+		<div th:fragment='paginationbar' class="paginationbar" th:if="!${#lists.isEmpty(teacherList)}">
+			<ul class="pagination">
+				<li th:class="${page.first} ? 'disabled':''" style="display: inline">
+					<span th:if="${page.first}">←先頭</span> <a th:if="${not page.first}"
+					th:href="@{${url}(page=0,region=${region?.regionId},subject=${subject?.subjectId})}">←先頭</a>
+				</li>
+				<li th:each='i : ${#numbers.sequence(0, page.totalPages-1)}'
+					th:class="(${i}==${page.number})? 'active' : ''"
+					style="display: inline"><span th:if='${i}==${page.number}'
+					th:text='${i+1}'>1</span> <a th:if='${i}!=${page.number}'
+					th:href="@{${url}(page=${i},region=${region?.regionId},subject=${subject?.subjectId})}">
+						<span th:text='${i+1}'>1</span>
+				</a></li>
+				<li th:class="${page.last} ? 'disabled':''" style="display: inline">
+					<span th:if="${page.last}">末尾➝</span> <a th:if="${not page.last}"
+					th:href="@{${url}(page=(${page.totalPages}-1),region=${region?.regionId},subject=${subject?.subjectId})}">末尾➝</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<footer th:include="login/index::footer"></footer>
+	<script src="/js/script.js"></script>
+</body>
+</html>

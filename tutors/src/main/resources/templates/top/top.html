@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="_csrf" th:content="${_csrf.token}"/>
+<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+<title>TUTORS TOP PAGE</title>
+<link
+	href="https://fonts.googleapis.com/css?family=Montserrat&display=swap"
+	rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css"
+	integrity="sha256-UzFD2WYH2U1dQpKDjjZK72VtPeWP50NoJjd26rnAdUI="
+	crossorigin="anonymous" />
+<script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
+</head>
+<body th:with="user = ${#authentication.principal.user}">
+	<header class="header" th:fragment="top-header(user)">
+		<div class="container">
+			<div class="container-small">
+				<a th:href="@{http://ec2-13-114-198-225.ap-northeast-1.compute.amazonaws.com:8080/top}" class="headA">TUTORS</a>
+				<button type="button" class="headC">
+					<span class="fa fa-bars" title="MENU"></span>
+				</button>
+			</div>
+			<nav class="headB">
+				<ul>
+					<li><a th:href="@{http://ec2-13-114-198-225.ap-northeast-1.compute.amazonaws.com:8080/top}">TOP</a></li>
+					<li><a
+						th:href="@{'http://ec2-13-114-198-225.ap-northeast-1.compute.amazonaws.com:8080/profile/'+${user.userId}}">マイページ</a></li>
+					<li><a th:href="@{http://ec2-13-114-198-225.ap-northeast-1.compute.amazonaws.com:8080/profile/messageBox}">メッセージ</a></li>
+					<li><a th:href="@{http://ec2-13-114-198-225.ap-northeast-1.compute.amazonaws.com:8080/logout}">ログアウト</a></li>
+					<li class="alert-wrapper"><i class="far fa-bell" id="alert"></i></li>
+				</ul>
+			</nav>
+			<div class="alert-box">
+				<div class="alert-box-title">お知らせ</div>
+				<div class="alert-box-item-wrapper">
+					<div class="alert-box-item-content"></div>
+					<div class="alert-box-item-time"></div>
+				</div>
+			</div>
+		</div>
+	</header>
+	<div class="top-wrapper">
+		<div class="search-form-wrapper">
+			<h2 class="search-form-header">あなたに合った家庭教師を見つけよう!</h2>
+			<form th:action="@{/top/search}" th:object="${form}" method="get">
+				<div class="search-form">
+					<div class="search-form-item">
+						<p>教科で検索</p>
+						<div class="select-box">
+							<select id="subject" name="subject">
+								<option value="" selected>選択してください</option>
+								<option th:each="subject : ${subjectList}"
+									th:value="${subject.subjectId}"
+									th:text="${subject.subjectName}"></option>
+							</select>
+						</div>
+					</div>
+					<div class="search-form-item">
+						<p>地域で検索</p>
+						<div class="search-form-item-after">
+							<div class="select-box">
+								<select id="region" name="region">
+									<option value="" selected>選択してください</option>
+									<option th:each="region : ${regionList}"
+										th:value="${region.regionId}" th:text="${region.regionName}"></option>
+								</select>
+							</div>
+							<div class="submit-btn">
+								<input type="submit" value="検索" />
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+		<div th:each="teacher:${teacherList}" class="teacher-card">
+			<div class="teacher-card-left">
+				<a th:href="@{'/profile/'+${teacher.teacherUserId}}"> <img
+					th:src="@{'/image/'+${teacher.teacherUserId}}"
+					class="teacher-card-image" />
+				</a>
+			</div>
+			<div class="teacher-card-middle">
+				<div class="teacher-card-middle-top">
+					<a th:href="@{'/profile/'+${teacher.teacherUserId}}"
+						th:text="${teacher.user.userName}"></a>
+					<ul class="teacher-subject-tag-list">
+						<th:block th:each="subject:*{teacher.user.subjects}">
+							<li th:text="${subject?.subjectName}" class="teacher-subject-tag"></li>
+						</th:block>
+					</ul>
+				</div>
+				<div class="teacher-card-middle-center">
+					<p th:text="${teacher.user.selfIntroduction}"></p>
+				</div>
+				<div class="teacher-card-middle-bottom">
+					<span>地域:</span>
+					<p th:text="${teacher.user.region.regionName}"></p>
+					<span>時給:</span>
+					<p th:text="${teacher.minWage}+'円〜'"></p>
+					<div class="teacher-card-message-btn-wrapper">
+						<div class="teacher-card-message-btn">
+							メッセージを送る <a
+								th:href="@{'/profile/'+${teacher?.teacherUserId}+'/message'}"></a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="teacher-card-right">
+				<p>指導可能な日程</p>
+				<table>
+					<tr th:each="lessonMenu:*{teacher.user.lessonMenus}">
+						<td th:text="${lessonMenu?.id.dayOfTheWeek}"></td>
+						<td th:text="${lessonMenu?.lessonMenuStartTime}+' 〜 '"></td>
+						<td th:text="${lessonMenu?.lessonMenuEndTime}"></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+	<footer th:include="login/index::footer"></footer>
+	<script src="/js/script.js"></script>
+</body>
+</html>

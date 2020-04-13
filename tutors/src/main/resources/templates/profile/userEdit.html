@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta name="viewport" content="width=divece-width,initial-scale=1.0">
+<meta name="_csrf" th:content="${_csrf.token}"/>
+<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+<title>マイプロフィール編集</title>
+<link
+	href="https://fonts.googleapis.com/css?family=Montserrat&display=swap"
+	rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css"
+	integrity="sha256-UzFD2WYH2U1dQpKDjjZK72VtPeWP50NoJjd26rnAdUI="
+	crossorigin="anonymous" />
+<script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
+</head>
+<body th:with="user=${#authentication.principal.user}">
+	<header class="header" th:insert="top/top::top-header(${user})"></header>
+	<div class="user-edit-wrapper">
+		<div class="user-edit-form">
+			<h1>プロフィール編集画面</h1>
+			<img class="profile-edit-image" th:src="@{'/image/'+${user.userId}}" />
+			<div class="user-edit-item">
+				<form id="form" th:action="@{/upload}" method="post"
+					th:object="${fileUploadForm}" enctype="multipart/form-data">
+					<div class="err"
+						th:each="err,st : ${#lists.sort(#fields.errors('uploadFile'))}"
+						th:text="${err}" th:if="${st.index == 0}">エラーメッセージが出力されます</div>
+					<p th:text="${error}"></p>
+					<div>
+						<label for="userName" class="user-edit-label">プロフィール画像を選択</label>
+					</div>
+					<div class="file-upload-form">
+						<input id="uploadFile" name="uploadFile" type="file" value="" class="file-input"/>
+						<button id="confrim" name="confrim" class="file-btn" type="submit"
+							value="Submit">ファイルアップロード</button>
+					</div>
+				</form>
+			</div>
+			<form th:action="@{/profile/edit/}" th:object="${userEditForm}"
+				method="post">
+				<div class="user-edit-item">
+					<label for="userName" class="user-edit-label">ユーザ名(12文字以下)</label>
+					<input type="text" name="userName" class="user-edit-input user-edit-name"
+						th:attr="value = ${user.userName}"
+						th:errorclass="err" />
+					<div class="err"
+						th:each="err,st : ${#lists.sort(#fields.errors('userName'))}"
+						th:text="${err}" th:if="${st.index == 0}">エラーメッセージが出力されます</div>
+				</div>
+				<div class="user-edit-item">
+					<label for="gender" class="user-edit-label">性別</label> <input
+						type="radio" name="gender" id="radioA" value="男性" 
+						th:checked="${user.gender=='男性'}" /> <label for="radioA">男性</label>
+					<input type="radio" name="gender" id="radioB" value="女性"
+						th:checked="${user.gender=='女性'}" /> <label for="radioB">女性</label>
+				</div>
+				<div class="user-edit-item">
+					<label for="age" class="user-edit-label">年齢</label> <select
+						id="age" name="age" th:errorclass="err" class="user-edit-input user-edit-select">
+						<option value="" selected class="user-edit-input">選択してください</option>
+						<option th:each="i : ${#numbers.sequence(0, 100)}" th:value="${i}" 
+							th:text="${i}" th:selected="${i==user.age}">歳</option>
+					</select>
+					<div class="err"
+						th:each="err,st : ${#lists.sort(#fields.errors('age'))}"
+						th:text="${err}" th:if="${st.index == 0}">エラーメッセージが出力されます</div>
+				</div>
+				<div class="user-edit-item">
+					<label for="region" class="user-edit-label">地域</label> <select
+						id="region" name="region" class="user-edit-input user-edit-select">
+						<option value="" selected>選択してください</option>
+						<option th:each="region : ${regionList}"
+							th:value="${region.regionId}" th:text="${region.regionName}"
+							th:selected="${region.regionId==user.region?.regionId}">
+						</option>
+					</select>
+				</div>
+				<div class="user-edit-item">
+					<label for="selfIntroduction" class="user-edit-label">自己紹介</label>
+					<textarea name="selfIntroduction" th:errorclass="err" 
+						class="self-intro user-edit-input" cols="30" rows="10" placeholder="300文字以内"
+						th:text="${user.selfIntroduction}">
+					</textarea>
+					<div class="err"
+						th:each="err,st : ${#lists.sort(#fields.errors('selfIntroduction'))}"
+						th:text="${err}" th:if="${st.index == 0}">エラーメッセージが出力されます</div>
+				</div>
+				<input type="submit" class="edit-btn" value="プロフィールを変更" /> 
+				<a class="edit-back-btn" th:href="@{'/profile/'+${user.userId}}">プロフィール画面に戻る</a>
+			</form>
+		</div>
+	</div>
+	<footer th:include="login/index::footer"></footer>
+	<script src="/js/script.js"></script>
+</body>
+</html>

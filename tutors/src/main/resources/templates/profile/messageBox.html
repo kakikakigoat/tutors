@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=divece-width,initial-scale=1.0">
+<meta name="_csrf" th:content="${_csrf.token}"/>
+<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+<title>メッセージボックス</title>
+<link
+	href="https://fonts.googleapis.com/css?family=Montserrat&display=swap"
+	rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css"
+	integrity="sha256-UzFD2WYH2U1dQpKDjjZK72VtPeWP50NoJjd26rnAdUI="
+	crossorigin="anonymous" />
+<script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
+</head>
+<body th:with="user = ${#authentication.principal.user}">
+	<header class="header" th:insert="top/top::top-header(${user})"></header>
+	<div class="message-box-wrapper">
+		<h1 class="message-box-title">メッセージBOX</h1>
+		<p th:if="${#lists.isEmpty(userList)}" class="message-empty">メッセージはまだありません</p>
+		<div th:each="dto:${messageForm.messageDto}" class="message-box">
+			<a th:href="@{'/profile/'+${dto.messageUser.userId}+'/message'}" ></a>
+			<div class="message-box-header">
+				<img th:src="@{'/image/'+${dto.messageUser.userId}}"
+					class="message-box-image" />
+				<p th:text="${dto.messageUser.userName}"
+					class="message-box-user-name"></p>
+				<p th:text="${#dates.format(dto.message.messageTime,'MM/dd HH:mm')}"
+					class="message-box-time"></p>
+			</div>
+			<p th:text="${dto.message.messageContent}" class="message-box-content"></p>
+		</div>
+	</div>
+	<footer th:include="login/index::footer"></footer>
+	<script src="/js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>家庭教師マッチングサービスTUTORS</title>
+<meta name="viewport" content="width=divece-width,initial-scale=1.0">
+<link
+	href="https://fonts.googleapis.com/css?family=Montserrat&display=swap"
+	rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css"
+	integrity="sha256-UzFD2WYH2U1dQpKDjjZK72VtPeWP50NoJjd26rnAdUI="
+	crossorigin="anonymous" />
+<script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
+<script>
+$(function(){
+	//ヘッダー
+	$(".headC").click(function(){
+		$(".headB").slideToggle();
+	});
+});
+</script>
+</head>
+<body>
+	<header class="index-header" th:fragment="header">
+		<div class="container">
+			<div class="container-small">
+				<a th:href="@{index}" class="headA">TUTORS</a>
+				<button type="button" class="headC">
+					<span class="fa fa-bars" title="MENU"></span>
+				</button>
+			</div>
+			<nav class="headB">
+				<ul>
+					<li><a th:href="@{index}">トップ</a></li>
+					<li><a th:href="@{signUp}" class="signup-show">新規登録</a></li>
+					<li><a th:href="@{login}" class="login-show">ログイン</a></li>
+				</ul>
+			</nav>
+		</div>
+	</header>
+
+	<section class="conA">
+		<div class="container">
+			<img th:src="@{images/penlogo.svg}" alt="tutors-logo" />
+			<h1>TUTORS</h1>
+			<p>-家庭教師マッチングサービス-</p>
+			<a th:href="@{signUp}" class="signup-show">会員登録をする</a>
+		</div>
+	</section>
+	<section class="conB">
+		<div class="container">
+			<div class="text">
+				<span class="far fa-lightbulb icon"></span>
+				<h2>TUTORSとは？</h2>
+				<p>家庭教師のマッチングサービスです。何かを学びたい人、教えたい人のためのサービスです。</p>
+			</div>
+			<div class="text">
+				<span class="fas fa-pen icon"></span>
+				<h2>学びたい人へ</h2>
+				<p>TUTORSを使って家庭教師を探してみましょう!きっとあなたに合った先生が見つかるはずです。</p>
+			</div>
+			<div class="text">
+				<span class="fa fa-rocket icon"></span>
+				<h2>教えたい人へ</h2>
+				<p>あなたのスキルや知識を生かして生徒に教えてみませんか？TUTORSを利用して素敵な先生になりましょう。</p>
+			</div>
+		</div>
+	</section>
+	<footer th:fragment="footer">
+		<div class="container">
+			<div class="footA">
+				<h2>TUTORS</h2>
+			</div>
+			<div class="footC">©︎TUTORS corp. All rights reserved.</div>
+		</div>
+	</footer>
+</body>
+</html>

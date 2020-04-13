@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="_csrf" th:content="${_csrf.token}"/>
+<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+<title>メッセージ</title>
+<link
+	href="https://fonts.googleapis.com/css?family=Montserrat&display=swap"
+	rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css"
+	integrity="sha256-UzFD2WYH2U1dQpKDjjZK72VtPeWP50NoJjd26rnAdUI="
+	crossorigin="anonymous" />
+<script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
+</head>
+</head>
+<body th:with="user = ${#authentication.principal.user}">
+	<header class="header" th:insert="top/top::top-header(${user})"></header>
+	<div class="message-wrapper">
+		<div class="message-send-form">
+			<h1 class="message-title">メッセージ</h1>
+			<p th:text="${receiverUser.userName}+'さんへメッセージを送る'"></p>
+			<form th:action="@{'/profile/'+${receiverUser.userId}+'/message'}"
+				th:object="${messageForm}" method="POST">
+				<div class="msg-err"
+					th:each="err,st : ${#lists.sort(#fields.errors('messageContent'))}"
+					th:text="${err}" th:if="${st.index == 0}">エラーメッセージが出力されます</div>
+				<textarea placeholder="メッセージを入力してください" th:field="*{messageContent}"
+					wrap="hard">
+		        </textarea>
+				<div class="message-btn-wrapper">
+					<input type="submit" class="message-btn">
+				</div>
+			</form>
+		</div>
+		<div th:each="message:${messages}" class="message">
+			<div class="message-header">
+				<img th:src="@{'/image/'+${message.senderUser.userId}}"
+					class="message-image" />
+				<p
+					th:text="${message.senderUser.userId==senderUser.userId}? 
+		${senderUser.userName}:${receiverUser.userName}"
+					class="message-user-name" />
+				<p th:text="${#dates.format(message.messageTime,'MM/dd HH:mm')}"
+					class="message-time"></p>
+			</div>
+			<div class="message-content">
+				<div
+					th:each="message: ${message.messageContent.split('\r\n|\r|\n', -1)}">
+					<th:block th:text="${message}" />
+					<br />
+				</div>
+			</div>
+		</div>
+	</div>
+	<footer th:include="login/index::footer"></footer>
+	<script src="/js/script.js"></script>
+</body>
+</html>

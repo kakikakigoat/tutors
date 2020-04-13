@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=divece-width,initial-scale=1.0">
+<meta name="_csrf" th:content="${_csrf.token}" />
+<meta name="_csrf_header" th:content="${_csrf.headerName}" />
+<link
+	href="https://fonts.googleapis.com/css?family=Montserrat&display=swap"
+	rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css"
+	integrity="sha256-UzFD2WYH2U1dQpKDjjZK72VtPeWP50NoJjd26rnAdUI="
+	crossorigin="anonymous" />
+<script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
+
+<title>プロフィール TUTOR情報</title>
+</head>
+<body th:with="authUser=${#authentication.principal.user}">
+	<header class="header" th:insert="top/top::top-header(${authUser})"></header>
+	<div class="tutor-wrapper">
+		<th:block
+			th:if="${#lists.isEmpty(unapprovedMatchingList) && #lists.isEmpty(applyingMatchingList)
+					 && #lists.isEmpty(underContractMatchingList) && #lists.isEmpty(underContractStudentMatchingList)}">
+			<h2>TUTOR情報はまだありません</h2>
+		</th:block>
+		<th:block th:unless="${#lists.isEmpty(unapprovedMatchingList)}">
+			<h2>TUTOR申請が届いています</h2>
+			<div th:each="matching:${unapprovedMatchingList}"
+				class="teacher-card tutor-card">
+				<div class="tutor-card-left">
+					<a th:href="@{'/profile/'+${matching.user2.userId}}"> <img
+						th:src="@{'/image/'+${matching.user2.userId}}"
+						class="tutor-card-image" />
+					</a>
+				</div>
+				<div class="teacher-card-middle">
+					<div class="teacher-card-middle-top">
+						<a th:href="@{'/profile/'+${matching.user2.userId}}"
+							th:text="${matching.user2.userName}"></a>
+					</div>
+					<div class="teacher-card-middle-bottom">
+						<p>契約条件</p>
+						<span>地域:</span>
+						<p th:text="${matching.region.regionName}"></p>
+						<span>時給:</span>
+						<p th:text="${matching.wage}+'円'"></p>
+						<form th:action="@{/profile/tutor/approve}" method="post">
+							<input type="hidden" name="userId"
+								th:value="${matching.user2.userId}"> <input
+								type="submit" class="tutor-btn" value="承認">
+						</form>
+						<form th:action="@{/profile/tutor/reject}" method="post">
+							<input type="hidden" name="userId"
+								th:value="${matching.user2.userId}"> <input
+								type="submit" class="tutor-btn" value="拒否">
+						</form>
+					</div>
+				</div>
+			</div>
+		</th:block>
+		<th:block th:unless="${#lists.isEmpty(applyingMatchingList)}">
+			<h2>TUTOR申請中</h2>
+			<div th:each="matching:${applyingMatchingList}"
+				class="teacher-card tutor-card">
+				<div class="tutor-card-left">
+					<a th:href="@{'/profile/'+${matching.user1.userId}}"> <img
+						th:src="@{'/image/'+${matching.user1.userId}}"
+						class="tutor-card-image" />
+					</a>
+				</div>
+				<div class="teacher-card-middle">
+					<div class="teacher-card-middle-top">
+						<a th:href="@{'/profile/'+${matching.user1.userId}}"
+							th:text="${matching.user1.userName}"></a>
+					</div>
+					<div class="teacher-card-middle-bottom">
+						<p>申請中の条件</p>
+						<span>地域:</span>
+						<p th:text="${matching.region.regionName}"></p>
+						<span>時給:</span>
+						<p th:text="${matching.wage}+'円'"></p>
+					</div>
+				</div>
+			</div>
+		</th:block>
+		<th:block th:unless="${#lists.isEmpty(underContractMatchingList)}">
+			<h2>契約中のTUTOR</h2>
+			<div th:each="matching:${underContractMatchingList}"
+				class="teacher-card tutor-card">
+				<div class="tutor-card-left">
+					<a th:href="@{'/profile/'+${matching.user1.userId}}"> <img
+						th:src="@{'/image/'+${matching.user1.userId}}"
+						class="tutor-card-image" />
+					</a>
+				</div>
+				<div class="teacher-card-middle">
+					<div class="teacher-card-middle-top">
+						<a th:href="@{'/profile/'+${matching.user1.userId}}"
+							th:text="${matching.user1.userName}"></a>
+					</div>
+					<div class="teacher-card-middle-bottom">
+						<p>契約条件</p>
+						<span>地域:</span>
+						<p th:text="${matching.region.regionName}"></p>
+						<span>時給:</span>
+						<p th:text="${matching.wage}+'円'"></p>
+						<form th:action="@{/profile/tutor/finishContact}" method="post">
+							<input type="hidden" name="userId"
+								th:value="${matching.user1.userId}"> <input
+								type="submit" class="tutor-btn" value="契約を終了する">
+						</form>
+					</div>
+				</div>
+			</div>
+		</th:block>
+		<th:block
+			th:unless="${#lists.isEmpty(underContractStudentMatchingList)}">
+			<h2>契約中の生徒</h2>
+			<div th:each="matching:${underContractStudentMatchingList}"
+				class="teacher-card tutor-card">
+				<div class="tutor-card-left">
+					<a th:href="@{'/profile/'+${matching.user2.userId}}"> <img
+						th:src="@{'/image/'+${matching.user2.userId}}"
+						class="tutor-card-image" />
+					</a>
+				</div>
+				<div class="teacher-card-middle">
+					<div class="teacher-card-middle-top">
+						<a th:href="@{'/profile/'+${matching.user2.userId}}"
+							th:text="${matching.user2.userName}"></a>
+					</div>
+					<div class="teacher-card-middle-bottom">
+						<p>契約条件</p>
+						<span>地域:</span>
+						<p th:text="${matching.region.regionName}"></p>
+						<span>時給:</span>
+						<p th:text="${matching.wage}+'円'"></p>
+						<div class="teacher-card-message-btn-wrapper">
+							<div class="teacher-card-message-btn">
+								メッセージを送る <a
+									th:href="@{'/profile/'+${matching.user2.userId}+'/message'}"></a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</th:block>
+	</div>
+</body>
+<footer th:include="login/index::footer"></footer>
+<script src="/js/script.js"></script>
+</html>

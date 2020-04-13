@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<title>ユーザープロフィール</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=divece-width,initial-scale=1.0">
+<meta name="_csrf" th:content="${_csrf.token}"/>
+<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+<link
+	href="https://fonts.googleapis.com/css?family=Montserrat&display=swap"
+	rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css"
+	integrity="sha256-UzFD2WYH2U1dQpKDjjZK72VtPeWP50NoJjd26rnAdUI="
+	crossorigin="anonymous" />
+<script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
+</head>
+<body th:with="authUser=${#authentication.principal.user}">
+	<header class="header" th:insert="top/top::top-header(${authUser})"></header>
+	<div class="profile-wrapper">
+		<div class="user-profile">
+			<div class="user-profile-header">
+				<img th:src="@{'/image/'+${user.userId}}" class="profile-image" />
+				<p th:text="${user.userName}" class="profile-name"></p>
+			</div>
+			<div class="user-profile-content">
+				<p th:text="${userMsg}"></p>
+				<p>
+					地域:<span th:text="${user.region?.regionName}"></span>
+				</p>
+				<p>
+					性別:<span th:text="${user.gender}"></span>
+				</p>
+				<p>
+					年齢:<span th:text="${user.age}"></span>
+				</p>
+				<h2 class="self-intro-header">自己紹介</h2>
+				<div
+					th:each="selfIntroduction: ${user.selfIntroduction?.split('\r\n|\r|\n', -1)}">
+					<th:block th:text="${selfIntroduction}" />
+					<br />
+				</div>
+				<div sec:authorize="${#vars.authUser.userId == #vars.user.userId}"
+					class="user-edit-btn">
+					<a th:href="@{/profile/edit}"> <i class="fas fa-edit"></i>
+						プロフィールを編集する
+					</a>
+				</div>
+				<div sec:authorize="${#vars.authUser.userId == #vars.user.userId}"
+					class="user-edit-btn">
+					<a th:href="@{/profile/tutor}"> <i class="fas fa-address-card"></i>
+						TUTOR情報を確認する
+					</a>
+				</div>
+				<div th:unless="${teacher?.teacherUserId}"
+					sec:authorize="${#vars.authUser.userId == #vars.user.userId}"
+					class="teacher-create-btn">
+					<a th:href="@{/profile/teacherEdit/}"><i class="fas fa-edit"></i>
+						教師情報を登録する</a>
+				</div>
+				<div class="profile-message-btn-wrapper"
+					sec:authorize="${#vars.authUser.userId != #vars.user.userId}">
+					<div class="profile-message-btn">
+						メッセージを送る <a
+							th:href="@{'/profile/'+${teacher?.teacherUserId}+'/message'}"></a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div th:if="${teacher?.teacherUserId}" class="teacher-profile">
+			<h2>教師情報</h2>
+			<p th:text="${teacherMsg}"></p>
+			<div class="teacher-profile-content">
+				<h3>担当教科</h3>
+				<ul class="subject-tag-list">
+					<th:block th:each="subjectList:${subjectList}">
+						<li th:text="${subjectList?.subjectName}" class="subject-tag"></li>
+					</th:block>
+				</ul>
+				<h3>指導可能な日程</h3>
+				<table>
+					<thead>
+						<tr>
+							<th>曜日</th>
+							<th>開始時間</th>
+							<th>終了時間</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="lessonMenu:${lessonMenus}">
+							<td th:text="${lessonMenu?.id.dayOfTheWeek}"></td>
+							<td th:text="${lessonMenu?.lessonMenuStartTime}"></td>
+							<td th:text="${lessonMenu?.lessonMenuEndTime}"></td>
+						</tr>
+					</tbody>
+				</table>
+				<div class="profile-min-wage">
+					<h3>時給</h3>
+					<p th:text="${teacher?.minWage}+'円〜'"></p>
+				</div>
+			</div>
+			<div th:if="${teacher?.teacherUserId}"
+				sec:authorize="${#vars.authUser.userId == #vars.user.userId}"
+				class="teacher-edit-btn">
+				<a th:href="@{/profile/teacherEdit/}"><i class="fas fa-edit"></i>
+					教師情報を編集する</a>
+			</div>
+			<div class="teacher-application-btn-wrapper"
+				sec:authorize="${#vars.authUser.userId != #vars.user.userId}">
+				<!-- マッチング申請をしていない または契約が終了している-->
+				<th:block
+					th:if="${matching == null || matching.contactEndTime != null}">
+					<div class="profile-message-btn">
+						TUTORを申請する <a
+							th:href="@{'/profile/'+${teacher?.teacherUserId}+'/matching'}"></a>
+					</div>
+				</th:block>
+				<!-- 申請をしている かつ契約が終了していない-->
+				<th:block
+					th:if="${matching !=null && matching.contactEndTime == null}">
+					<!-- 申請待ち -->
+					<th:block th:if="${matching.contactAvailability==null}">
+						<div class="profile-message-btn">TUTOR申請中です</div>
+					</th:block>
+					<!-- 契約中 -->
+					<th:block th:if="${matching.contactAvailability==true}">
+						<div class="profile-message-btn">契約中です</div>
+					</th:block>
+				</th:block>
+			</div>
+		</div>
+	</div>
+	<footer th:include="login/index::footer"></footer>
+	<script src="/js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<title>教師情報編集</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=divece-width,initial-scale=1.0">
+<meta name="_csrf" th:content="${_csrf.token}"/>
+<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+<link
+	href="https://fonts.googleapis.com/css?family=Montserrat&display=swap"
+	rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css"
+	integrity="sha256-UzFD2WYH2U1dQpKDjjZK72VtPeWP50NoJjd26rnAdUI="
+	crossorigin="anonymous" />
+<script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
+</head>
+<body th:with="user=${#authentication.principal.user}">
+	<header class="header" th:insert="top/top::top-header(${user})"></header>
+	<div class="teacher-edit-wrapper">
+		<div class="teacher-edit-form">
+			<h1>教師情報編集画面</h1>
+			<form th:action="@{/profile/teacherEdit/}"
+				th:object="${teacherEditForm}" method="post">
+				<div class="teacher-edit-item">
+					<label for="minWage" class="teacher-edit-label">希望する時給</label> <select
+						id="minWage" name="minWage" th:errorclass="err">
+						<option value="-1" selected>選択する</option>
+						<option th:each="i : ${#numbers.sequence(1000, 10000,100)}"
+							th:value="${i}" th:text="${i}+'円〜'"
+							th:selected="${i==teacher?.minWage}"></option>
+					</select>
+					<div class="err"
+						th:each="err,st : ${#lists.sort(#fields.errors('minWage'))}"
+						th:text="${err}" th:if="${st.index == 0}">エラーメッセージが出力されます</div>
+				</div>
+				<div class="teacher-edit-item">
+					<p class="teacher-edit-label">指導可能な教科</p>
+					<div class="err"
+						th:each="err,st : ${#lists.sort(#fields.errors('selectedSubjects'))}"
+						th:text="${err}" th:if="${st.index == 0}">エラーメッセージが出力されます</div>
+					<div class="subject-items">
+						<th:block th:each="subject : *{subList}">
+							<label class="subject-item">
+							<input type="checkbox" th:value="${subject.subjectId}" name="selectedSubjects"
+								th:text="${subject.subjectName}" 
+								th:checked="${#lists.contains(teachableSubjects, subject)}" />
+							</label>
+						</th:block>
+					</div>
+				</div>
+				<div class="teacher-edit-item">
+					<div class="teacher-edit-label">指導可能な日程</div>
+					<table class="teacher-edit-table">
+						<thead>
+							<tr>
+								<th></th>
+								<th class="day-of-the-week">曜日</th>
+								<th>時間帯</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td><input type="checkbox" id="monCheck"></td>
+								<td class="day-of-the-week">月曜日&nbsp;</td>
+								<td><select id="monTimeFrom" th:field="*{mondayTimeFrom}"
+									disabled>
+										<option th:each="time : *{timeList}" th:value="${time}"
+											th:text="${time}"></option>
+								</select> <span th:if="${#fields.hasErrors('mondayTimeFrom')}"
+									th:errors="*{mondayTimeFrom}"></span> &nbsp;-&nbsp; <select
+									id="monTimeTo" th:field="*{mondayTimeTo}" disabled>
+										<option th:each="time : *{timeList}" th:value="${time}"
+											th:text="${time}"></option>
+								</select> <span th:if="${#fields.hasErrors('mondayTimeTo')}"
+									th:errors="*{mondayTimeTo}"></span></td>
+							</tr>
+							<tr>
+								<td><input type="checkbox" id="tueCheck"></td>
+								<td class="day-of-the-week">火曜日&nbsp;</td>
+								<td><select id="tueTimeFrom" th:field="*{tuesdayTimeFrom}"
+									disabled>
+										<option th:each="time : *{timeList}" th:value="${time}"
+											th:text="${time}"></option>
+								</select> <span th:if="${#fields.hasErrors('tuesdayTimeFrom')}"
+									th:errors="*{tuesdayTimeFrom}"></span> &nbsp;-&nbsp; <select
+									id="tueTimeTo" th:field="*{tuesdayTimeTo}" disabled>
+										<option th:each="time : *{timeList}" th:value="${time}"
+											th:text="${time}"></option>
+								</select> <span th:if="${#fields.hasErrors('tuesdayTimeTo')}"
+									th:errors="*{tuesdayTimeTo}"></span></td>
+							</tr>
+							<tr>
+								<td><input type="checkbox" id="wedCheck"></td>
+								<td class="day-of-the-week">水曜日&nbsp;</td>
+								<td><select id="wedTimeFrom"
+									th:field="*{wednesdayTimeFrom}" disabled>
+										<option th:each="time : *{timeList}" th:value="${time}"
+											th:text="${time}"></option>
+								</select> <span th:if="${#fields.hasErrors('wednesdayTimeFrom')}"
+									th:errors="*{wednesdayTimeFrom}"></span> &nbsp;-&nbsp; <select
+									id="wedTimeTo" th:field="*{wednesdayTimeTo}" disabled>
+										<option th:each="time : *{timeList}" th:value="${time}"
+											th:text="${time}"></option>
+								</select> <span th:if="${#fields.hasErrors('wednesdayTimeTo')}"
+									th:errors="*{wednesdayTimeTo}"></span></td>
+							</tr>
+							<tr>
+								<td><input type="checkbox" id="thuCheck"></td>
+								<td class="day-of-the-week">木曜日&nbsp;</td>
+								<td><select id="thuTimeFrom" th:field="*{thursdayTimeFrom}"
+									disabled>
+										<option th:each="time : *{timeList}" th:value="${time}"
+											th:text="${time}"></option>
+								</select> <span th:if="${#fields.hasErrors('thursdayTimeFrom')}"
+									th:errors="*{thursdayTimeFrom}"></span> &nbsp;-&nbsp; <select
+									id="thuTimeTo" th:field="*{thursdayTimeTo}" disabled>
+										<option th:each="time : *{timeList}" th:value="${time}"
+											th:text="${time}"></option>
+								</select> <span th:if="${#fields.hasErrors('thursdayTimeTo')}"
+									th:errors="*{thursdayTimeTo}"></span></td>
+							</tr>
+							<tr>
+								<td><input type="checkbox" id="friCheck"></td>
+								<td class="day-of-the-week">金曜日&nbsp;</td>
+								<td><select id="friTimeFrom" th:field="*{fridayTimeFrom}"
+									disabled>
+										<option th:each="time : *{timeList}" th:value="${time}"
+											th:text="${time}"></option>
+								</select> <span th:if="${#fields.hasErrors('fridayTimeFrom')}"
+									th:errors="*{fridayTimeFrom}"></span> &nbsp;-&nbsp; <select
+									id="friTimeTo" th:field="*{fridayTimeTo}" disabled>
+										<option th:each="time : *{timeList}" th:value="${time}"
+											th:text="${time}"></option>
+								</select> <span th:if="${#fields.hasErrors('fridayTimeTo')}"
+									th:errors="*{fridayTimeTo}"></span></td>
+							</tr>
+							<tr>
+								<td><input type="checkbox" id="satCheck"></td>
+								<td class="day-of-the-week">土曜日&nbsp;</td>
+								<td><select id="satTimeFrom" th:field="*{saturdayTimeFrom}"
+									disabled>
+										<option th:each="time : *{timeList}" th:value="${time}"
+											th:text="${time}"></option>
+								</select> <span th:if="${#fields.hasErrors('saturdayTimeFrom')}"
+									th:errors="*{saturdayTimeFrom}"></span> &nbsp;-&nbsp; <select
+									id="satTimeTo" th:field="*{saturdayTimeTo}" disabled>
+										<option th:each="time : *{timeList}" th:value="${time}"
+											th:text="${time}"></option>
+								</select> <span th:if="${#fields.hasErrors('saturdayTimeTo')}"
+									th:errors="*{saturdayTimeTo}"></span></td>
+							</tr>
+							<tr>
+								<td><input type="checkbox" id="sunCheck"></td>
+								<td class="day-of-the-week">日曜日&nbsp;</td>
+								<td><select id="sunTimeFrom" th:field="*{sundayTimeFrom}"
+									disabled>
+										<option th:each="time : *{timeList}" th:value="${time}"
+											th:text="${time}"></option>
+								</select> <span th:if="${#fields.hasErrors('sundayTimeFrom')}"
+									th:errors="*{sundayTimeFrom}"></span> &nbsp;-&nbsp; <select
+									id="sunTimeTo" th:field="*{sundayTimeTo}" disabled>
+										<option th:each="time : *{timeList}" th:value="${time}"
+											th:text="${time}"></option>
+								</select> <span th:if="${#fields.hasErrors('sundayTimeTo')}"
+									th:errors="*{sundayTimeTo}"></span></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div>
+					<input type="submit" value="教師情報を変更" class="edit-btn" /> <a
+						th:href="@{'/profile/'+${user.userId}}" class="edit-back-btn">プロフィール画面に戻る</a>
+				</div>
+			</form>
+		</div>
+	</div>
+	<footer th:include="login/index::footer"></footer>
+	<script src="/js/script.js"></script>
+</body>
+</html>

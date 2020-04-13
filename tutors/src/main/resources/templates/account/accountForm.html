@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>TUTORSユーザー登録</title>
+<meta name="viewport" content="width=divece-width,initial-scale=1.0">
+<link
+	href="https://fonts.googleapis.com/css?family=Montserrat&display=swap"
+	rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css"
+	integrity="sha256-UzFD2WYH2U1dQpKDjjZK72VtPeWP50NoJjd26rnAdUI="
+	crossorigin="anonymous" />
+<script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
+<script>
+$(function(){
+	//ヘッダー
+	$(".headC").click(function(){
+		$(".headB").slideToggle();
+	});
+});
+</script>
+</head>
+<body>
+	<header class="header" th:include="login/index::header"></header>
+	<div class="signUp-wrapper">
+		<div class="signUp-container">
+			<h1 class="section-title">ユーザー登録</h1>
+			<div class="signUp-form">
+				<p class="err" th:text="${sameEmail}"></p>
+				<form th:action="@{/signUp}" th:object="${accountForm}"
+					method="post">
+					<div>
+						<label for="userName">ユーザ名(12文字以下)</label> <input type="text" class="signUp-input"
+							name="userName" th:field="*{userName}" th:errorclass="err" />
+						<div class="err"
+							th:each="err,st : ${#lists.sort(#fields.errors('userName'))}"
+							th:text="${err}" th:if="${st.index == 0}">エラーメッセージが出力されます</div>
+					</div>
+					<div>
+						<label for="mailAddress">メールアドレス</label> <input type="text" class="signUp-input"
+							name="mailAddress" th:field="*{mailAddress}" th:errorclass="err" />
+						<div class="err"
+							th:each="err,st : ${#lists.sort(#fields.errors('mailAddress'))}"
+							th:text="${err}" th:if="${st.index == 0}">エラーメッセージが出力されます</div>
+					</div>
+					<div>
+						<label for="password">パスワード（英数字8〜12文字)</label> <input type="password" class="signUp-input"
+							name="password" th:field="*{password}" th:errorclass="err" />
+						<div class="err"
+							th:each="err,st : ${#lists.sort(#fields.errors('password'))}"
+							th:text="${err}" th:if="${st.index == 0}">エラーメッセージが出力されます</div>
+					</div>
+					<div>
+						<label for="confirmPassword">パスワード(確認)</label> <input class="signUp-input"
+							type="password" name="confirmPassword"
+							th:field="*{confirmPassword}" th:errorclass="err" />
+						<div th:if="${#fields.hasErrors('confirmPassword')}"
+							th:errors="*{confirmPassword}" th:errorclass="err"></div>
+					</div>
+					<div class="signUp-submit">
+						<input class="signUp-btn" type="submit" value="新規登録" />
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<footer th:include="login/index::footer"></footer>
+</body>
+</html>

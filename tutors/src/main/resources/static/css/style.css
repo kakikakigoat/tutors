@@ -1,0 +1,1347 @@
+@charset "UTF-8";
+
+
+/*基本色*/
+:root {
+  --main-color: #5D9AB2;
+  --accent-color:#BF6A7A;
+  --dark-color:#2B5566;
+  --dark-main-color:#2B5566;
+  --icon-color: #fff;
+  --icon-bk-color: #ddd;
+  --text-bright-color: #fff;
+  --large-width: 1100px;
+}
+
+
+/*基本設定：ページ全体*/
+body {
+  margin: 0;
+  font-family: 'メイリオ',
+  'Hiragino kaku Gothic Pro',
+  sans-serif;
+}
+/*ヘッダー*/
+.index-header {
+  position: absolute;
+  top:0;
+  left: 0;
+  z-index: 100;
+  width: 100%;
+  background-color: rgba(255,255,255,0.9);
+}
+/*トップ画面以外のヘッダー*/
+.header {
+  top:0;
+  left: 0;
+  width: 100%;
+  background-color: rgba(230,230,230,0.8);
+}
+
+/* ヘッダーA:サイト名*/
+.headA {
+  display: inline-block;
+  line-height: 70px;
+  padding-left: 20px;
+  padding-right: 20px;
+  background-color: var(--main-color);
+  color: var(--text-bright-color);
+  font-family: 'Montserrat',sans-serif;
+  font-size: 24px;
+  text-decoration:none;
+}
+/*　ヘッダーB：ナビゲーションメニュー*/
+.headB ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.headB a,.alert-wrapper {
+  display: block;
+  padding: 15px;
+  color: inherit;
+  font-size: 12px;
+  text-decoration:none;
+}
+
+.headB a:hover,.alert-wrapper:hover {
+  background-color: rgba(0,0,0,0.3);
+}
+
+.alert-wrapper {
+	cursor:pointer;
+	font-size: 20px;
+	padding: 8px;
+	
+}
+
+.alert {
+	color:#fc9d03;
+}
+
+.alert-box {
+	position:absolute;
+	top: 70px;
+	right: 0;
+	width: 330px;
+	box-shadow: rgba(0,0,0,0.16) 0px 3px 10px;
+	max-height: 90vh;
+	overflow-y :scroll;
+	display:none;
+	z-index:10;
+}
+
+.alert-box-show {
+	display:block;
+}
+
+.alert-box-title {
+	line-height: 0.3;
+	font-size:12px;
+	padding: 14px 20px;
+	color:rgb(43,84,106);
+	display:block;
+	border-top:1px solid rgba(221,223,227,0.3);
+	border-bottom:1px solid rgba(221,223,227,0.3);
+	background-color:rgba(250,251,251,0.7);
+	font-weight:bold;
+}
+
+.alert-box-item-wrapper {
+	padding: 14px 20px;
+	color:rgb(43,84,106);
+	display:block;
+	position:relative;
+}
+
+.alert-box-item-wrapper:hover {
+	opacity:0.7;
+}
+
+.alert-box-item-content {
+	font-size: 12px;
+	color:#2b546a;
+}
+
+.alert-box-item-time {
+	color:#bac6d3;
+	font-size: 10px;
+}
+
+.alert-box-item-wrapper a {
+	display: block;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+
+
+/*コンテンツA：ヒーローイメージ*/
+.conA {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  min-height: 450px;
+  background-image: linear-gradient(rgba(0,0,0,0.1),rgba(0, 0, 0, 0.3)),url("../images/balloon.jpg");
+  background-position: center;
+  background-size: cover;
+  text-align: center;
+  color: var(--text-bright-color);
+}
+
+.conA h1 {
+  margin:0 0 10px;
+  font-family: 'Montserrat',sans-serif;
+  font-size: 15vw;
+  font-weight: 900;
+  letter-spacing: 0.2em;
+  margin-left: 0.2em;
+}
+
+.conA p {
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 18px;
+}
+.conA img {
+  width: 15%;
+  margin: 0;
+}
+
+.conA a {
+  display: inline-block;
+  margin-top: 27px;
+  padding: 10px 30px;
+  border: solid 3px currentColor;
+  border-radius: 6px;
+  background-color: #FFB860;
+  color: var(--text-bright-color);
+  font-size: 14px;
+  text-decoration:none;
+}
+
+.conA a:hover {
+  background-image: linear-gradient(
+    rgba(255, 255, 255, 0.2),
+    rgba(255, 255, 255, 0.2)
+  );
+}
+
+/*コンテンツB:概要(アイコン＋テキスト)*/
+.conB .text {
+  text-align: center;
+}
+
+.conB h2 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-size: 20px;
+}
+
+.conB p {
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 14px;
+  line-height: 1.8;
+  opacity: 0.8px;
+}
+
+.conB .icon {
+  display: inline-block;
+  margin-bottom: 20px;
+  font-size: 40px;
+  width: 2em;
+  line-height: 2em;
+  border-radius: 50%;
+  text-align:center;
+  background-color: var(--icon-bk-color);
+  color: var(--icon-color);
+}
+
+.conB .container {
+  padding-top: 80px;
+  padding-bottom: 20px;
+}
+.conB .text {
+  padding: 0 50px 60px;
+  text-align: center;
+}
+
+footer {
+  color: #fff;
+  color: var(--text-bright-color);
+  background-color: var(--dark-main-color);
+}
+
+footer .container {
+  padding: 40px 20px;
+}
+
+.footA h2 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-family: 'Montserrat',sans-serif;
+  font-size: 30px;
+  letter-spacing: 0.2em;
+}
+
+.footC {
+  font-size: 12px;
+  text-align: center;
+  font-family: 'Montserrat',sans-serif;
+}
+
+/*---レスポンシブデザイン大きい画面-----*/
+
+@media (min-width: 768px) {
+  /*-----header-----*/
+  header .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: var(--large-width);
+    margin: 0 auto;
+  }
+  .headB {
+    display: block !important;
+  }
+  .headB ul {
+    display: flex;
+  }
+  .headC {
+    display: none;
+  }
+  /*conA*/
+  .conA h1 {
+    font-size: 115px;
+  }
+  .conA p {
+    font-size: 24px;
+  }
+
+  .conB .container {
+    display: flex;
+    max-width: var(--large-width);
+    margin: 0 auto;
+  }
+  .conB .text {
+    flex: 1;
+  }
+
+  footer .container {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 1000px;
+    max-width: var(--large-width);
+    margin: 0 auto;
+  }
+  .footA {
+    flex: 0 0 40%;
+  }
+
+  .footC {
+    flex: 0 0 100%;
+  }
+}
+/*小さい画面用の設定*/
+@media (max-width:767px) {
+  header .container-small {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .headB {
+    display: none;
+  }
+
+  .headC {
+    margin-right: 14px;
+    padding: 0;
+    border :none;
+    outline: none;
+    background: none;
+    font-size: 28px;
+    opacity: 0.5;
+    cursor: pointer;
+  }
+
+  .headC:hover {
+    opacity: 0.3;
+  }
+  .alert-wrapper {
+  display:none;
+  }
+  .alert-box {
+  display:none;
+  }
+}
+
+
+
+
+/*-------------login, sign-----------------*/
+.signUp-wrapper ,.login-wrapper{
+	background-color:background-color: #f7f7f7;
+}
+
+.signUp-container,.login-container {
+	width: 80%;
+	height: 570px;
+	padding:20px 60px;
+	margin:0 auto;
+	color: #5f5d60;
+}
+
+.login-container {
+	width: 80%;
+	height: 520px;
+	padding:20px 60px;
+	margin:0 auto;
+	color: #5f5d60;
+}
+.section-title {
+  border-bottom: 2px solid #dee7ec;
+  font-size: 28px;
+  font-family:"Hiragino Kaku Gothic ProN";
+  padding-bottom: 10px;
+  margin-bottom: 30px;
+}
+
+.signUp-form ,.login-form{
+  text-align: center
+}
+
+.signUp-form label {
+  display: inline-block;
+  width: 230px;
+  padding-right: 25px;
+  text-align: right;
+}
+.signUp-input{
+  width: 210px;
+  height: 6px;
+  margin: 5px 0;
+  padding: 20px;
+  font-size: 18px;
+  border: 1px solid #dee7ec;
+}
+.login-input{
+  width: 280px;
+  height: 5px;
+  margin: 18px 0;
+  padding: 14px;
+  font-size: 14px;
+  border: 1px solid #dee7ec;
+}
+
+.signUp-btn,.login-btn {
+  display:inline-block;
+  padding: 18px 45px;
+  margin-top: 40px;
+  font-size: 15px;
+  color: white;
+  opacity: 0.8;
+  border-radius: 4px;
+  background-color: var(--main-color);
+  border-style: none;
+  cursor:pointer;
+}
+
+.signUp-btn:hover,.login-btn:hover {
+  opacity: 1;
+}
+
+.err {
+	margin-bottom: 10px;
+	color: red;
+	font-size: 12px;
+}
+.login-error {
+	color: red;
+}
+
+/*-------------sign up-confirm-----------------*/
+.signUp-confirm-wrapper {
+	background-color:background-color: #f7f7f7;
+}
+.signUp-confirm-container {
+	height: 480px;
+	padding: 40px 120px;
+	width: 50%;
+	margin:0 auto;
+	color: #5f5d60;
+}
+
+.signUp-confirm-btn,.back-btn{
+  display:inline-block;
+  padding: 10px 24px;
+  margin-top: 20px;
+  margin-right: 20px;
+  font-size: 12px;
+  color: white;
+  opacity: 0.8;
+  border-radius: 4px;
+  border-style: none;
+}
+
+.signUp-confirm-btn {
+	background-color: var(--main-color);
+}
+
+.back-btn {
+  background-color: #c2c4c3;
+  text-decoration:none;
+}
+
+
+.signUp-confirm-btn:hover, .back-btn:hover, .login-btn:hover {
+  opacity: 1;
+}
+
+.login-btn {
+  display:inline-block;
+  padding: 12px 34px;
+  margin-top: 60px;
+  font-size: 12px;
+  color: white;
+  opacity: 0.8;
+  border-radius: 4px;
+  border-style: none;
+  text-decoration:none;
+  background-color: var(--main-color);
+}
+
+.signUp-complete-wrapper {
+	background-color:background-color: #f7f7f7;
+	text-align:center
+}
+.signUp-complete-container {
+	height: 340px;
+	padding: 100px;
+	margin: 0 auto;
+	color: #5f5d60;
+}
+/*-------------top---------------------------*/
+.top-wrapper {
+	padding:40px 120px;
+	min-height: 500px;
+	background-color: #f4f8fa;
+}
+
+.search-form-header {
+  font-size: 28px;
+  font-family:"Hiragino Kaku Gothic ProN";
+  padding-bottom: 10px;
+  margin: 0px;
+  color:#5f5d60;
+}
+
+.search-form {
+	display:flex;
+	width: 700px;
+}
+
+.search-form-item {
+	padding-right: 15px;
+	width: 240px;
+}
+
+.search-form-item p {
+	margin-bottom: 0px;
+}
+.select-box {
+	overflow: hidden;
+	width: 80%;
+	margin: 5px 0;
+	text-align: center;
+}
+.select-box select {
+	width: 100%;
+	padding-right: 1em;
+	cursor: pointer;
+	text-indent: 0.01px;
+	text-overflow: ellipsis;
+	border: none;
+	outline: none;
+	background: transparent;
+	background-image: none;
+	box-shadow: none;
+	-webkit-appearance: none;
+	appearance: none;
+}
+.select-box select::-ms-expand {
+    display: none;
+}
+.select-box {
+	position: relative;
+	border: 1px solid #bbbbbb;
+	border-radius: 2px;
+	background: #ffffff;
+}
+.select-box::before {
+	position: absolute;
+	top: 0.8em;
+	right: 0.9em;
+	width: 0;
+	height: 0;
+	padding: 0;
+	content: '';
+	border-left: 6px solid transparent;
+	border-right: 6px solid transparent;
+	border-top: 6px solid #666666;
+	pointer-events: none;
+}
+.select-box:after {
+	position: absolute;
+	top: 0;
+	right: 2.5em;
+	bottom: 0;
+	width: 1px;
+	content: '';
+	border-left: 1px solid #bbbbbb;
+}
+.select-box select {
+	padding: 8px 38px 8px 8px;
+	color: #666666;
+}
+
+.search-form-item-after {
+	display:flex;
+}
+
+.submit-btn {
+	width: 40px;
+	margin-left: 30px;
+	line-height: 39px;
+}
+
+.submit-btn input{
+  cursor: pointer;
+  border: none;
+  background: #3879D9;
+  color: #fff;
+  outline : none;
+  height: 35px;
+  width: 55px;
+}
+
+.search-result {
+	color:#4f5050;
+}
+
+.teacher-card {
+  display: flex;
+  width: 1000px;
+  max-height: 170px;
+  padding: 20px 10px;
+  margin: 30px auto;
+  background-color: #f7f7f7;
+  border: 1px solid #d5d5d5;
+  box-shadow: 0px 5px 2px rgba(30,30,30,0.1);
+}
+
+.teacher-card-image {
+	width: 70px;
+	height: 70px;
+	border-radius: 50%;
+}
+
+.teacher-card-left {
+	padding: 20px;
+}
+
+.teacher-card-image:hover {
+	opacity:0.8;
+}
+
+.teacher-card-middle {
+	width: 60%;
+}
+
+.teacher-card-middle-top {
+	display: flex;
+	height: 28px;
+}
+.teacher-card-middle-top a {
+	text-decoration:none;
+	padding-right: 15px;
+	color:#4f5050;
+}
+
+.teacher-card-middle-top a:hover {
+	color: #b0afaf;
+}
+
+.teacher-subject-tag-list {
+	text-align:center
+	list-style:none;
+	margin:0;
+	padding-inline-start: 0;
+}
+
+.teacher-subject-tag {
+	background: #d5e9f7 none;
+    font-size: 11px;
+    line-height: 2px;
+    display: inline-block;
+    vertical-align: top;
+    min-width: 35px;
+    height: 20px;
+    border: 1px solid #b8dbf2;
+    border-radius: 3px;
+    box-sizing: border-box;
+    padding: 10px 12px;
+    margin-right: 10px;
+    text-align: center;
+}
+
+.teacher-card-middle-center {
+	margin-top: 0;
+	font-size: 14px;
+}
+
+.teacher-card-middle-center p {
+	display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+}
+
+.teacher-card-middle-bottom {
+	display: flex;
+}
+.teacher-card-middle-bottom p {
+	margin: 0;
+	line-height: 37px;
+	padding-right: 15px;
+	font-size: 14px;
+}
+
+.teacher-card-middle-bottom span {
+	margin: 0;
+	line-height: 37px;
+	font-size: 12px;
+	color:#4f5050;
+}
+
+.teacher-card-message-btn-wrapper {
+	text-align:center;
+}
+
+.teacher-card-message-btn {
+	padding:5px 15px;
+	width: 90px;
+	border-radius: 40px;
+    border: 2px solid #5D9AB2;
+    text-align:center;
+    position: relative;
+    color: var(--main-color);
+    text-decoration: none;
+    background: #fff;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 11px;
+}
+.teacher-card-message-btn a{
+	display: block;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+
+.teacher-card-message-btn:hover {
+	color: #fff;
+	background:var(--main-color);
+}
+
+.teacher-card-right {
+	margin-left: 30px;
+	padding-left: 40px;
+	border-left: 1px solid #4f5050;
+}
+
+.teacher-card-right p {
+	margin: 0;
+	font-size:13px;
+	color:#4f5050;
+}
+
+.teacher-card-right table {
+	font-size:12px;
+	color:#4f5050;
+}
+
+.teacher-card-right th {
+	height: 20px;
+}
+
+.paginationbar {
+	text-align: center;
+	font-size: 16px;
+}
+.paginationbar a {
+	text-decoration:none;
+}
+
+
+/*-----------------profile-------------------*/
+
+.profile-wrapper {
+	padding: 100px;
+	background-color: #f4f8fa;
+}
+
+
+.user-profile {
+  width: 1000px;
+  padding: 50px 0px;
+  margin: 0 auto 50px;
+  background-color: #f7f7f7;
+  color:#5f5d60;
+  border-top: solid 5px #dee7ec;
+  box-shadow: 0px 5px 2px rgba(30,30,30,0.1);
+  font-size: 16px;
+}
+
+.user-profile-header {
+	text-align:center;
+	padding-bottom: 25px;
+}
+
+.profile-image {
+	border-radius: 50%;
+	height:120px;
+	width:120px;
+}
+
+.profile-name {
+	font-size: 28px;
+    font-weight: 700;
+    margin: 10px 0;
+    letter-spacing: 4px;
+    color: #13b1c0;
+}
+
+.user-profile-content {
+	padding-left:30%;
+}
+
+.self-intro-header {
+	font-size: 20px;
+	padding: 20px 0;
+}
+
+.profile-message-btn-wrapper {
+	text-align:center;
+	padding-top: 20px;
+	padding-left: 100px;
+}
+
+.profile-message-btn {
+	margin-top:10px;
+	padding:10px 30px;
+	width: 150px;
+	border-radius: 40px;
+    border: 2px solid #5D9AB2;
+    text-align:center;
+    position: relative;
+    color: var(--main-color);
+    text-decoration: none;
+    background: #fff;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 15px;
+}
+
+.profile-message-btn a{
+	display: block;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+
+.user-edit-btn {
+	padding:30px 0 0 100px;
+}
+
+.teacher-create-btn {
+	padding: 20px 0 20px 100px;
+}
+
+.user-edit-btn a,.teacher-edit-btn a,.teacher-create-btn a {
+	color:#4f5050;
+	text-decoration:none;
+}
+
+.user-edit-btn a:hover,.teacher-edit-btn a:hover,.teacher-create-btn a:hover {
+	color: #b0afaf;
+}
+
+.profile-message-btn:hover {
+	color: #fff;
+	background:var(--main-color);
+}
+
+.teacher-profile {
+  width: 1000px;
+  padding: 50px 0;
+  margin: 0 auto;
+  text-align: center;
+  background-color: #f7f7f7;
+  border-top: solid 5px #dee7ec;
+  box-shadow: 0px 5px 2px rgba(30,30,30,0.1);
+}
+
+.teacher-profile h2 {
+  padding-top: 10px;
+  padding-bottom: 5px;
+  border-bottom: 2px solid #dee7ec;
+  font-size: 28px;
+  font-family:"Hiragino Kaku Gothic ProN";
+  color:#5f5d60;
+}
+
+.teacher-profile-content {
+	text-align: left;
+	padding-left:30%;
+	
+}
+
+.teacher-profile-content h3 {
+	padding:20px 0 10px;
+	margin-bottom: 0px;
+}
+
+.teacher-profile-content h3,.teacher-profile-content th {
+  font-family:"Hiragino Kaku Gothic ProN";
+  color:#5f5d60;
+}
+.teacher-profile-content th,.teacher-profile-content td {
+	width: 100px;
+	text-align:center;
+}
+
+
+.subject-tag-list {
+	text-align:center
+	list-style:none;
+	padding-inline-start: 0;
+}
+
+.subject-tag {
+	background: #d5e9f7 none;
+    font-size: 13px;
+    line-height: 2px;
+    display: inline-block;
+    vertical-align: top;
+    min-width: 35px;
+    height: 23px;
+    border: 1px solid #b8dbf2;
+    border-radius: 3px;
+    box-sizing: border-box;
+    padding: 15px 18px;
+    margin-right: 15px;
+    text-align: center;
+}
+
+.profile-min-wage {
+	display: flex;
+	padding:35px 0;
+}
+.profile-min-wage h3 {
+	padding:0 20px 0 0;
+	margin:0;
+}
+
+.profile-min-wage p {
+	margin:0;
+	padding:0;
+	line-height: 29px;
+}
+
+.teacher-application-btn-wrapper {
+	display:inline-block;
+	margin:0 auto;
+}
+
+/*----------------userEdit-----------------*/
+.user-edit-wrapper {
+  height: 1100px;
+  padding-top: 80px;
+  background-color: #f4f8fa;
+}
+
+.user-edit-form {
+  width: 1000px;
+  padding: 50px 0;
+  margin: 0 auto;
+  text-align: center;
+  background-color: #f7f7f7;
+  border-top: solid 5px #dee7ec;
+  box-shadow: 0px 5px 2px rgba(30,30,30,0.1);
+}
+
+.user-edit-form h1 ,.teacher-edit-form h1{
+  padding-bottom: 10px;
+  margin-bottom: 30px;
+  border-bottom: 2px solid #dee7ec;
+  font-size: 28px;
+  font-family:"Hiragino Kaku Gothic ProN";
+  color:#5f5d60;
+  
+}
+
+.profile-edit-image {
+	border-radius: 50%;
+	width: 80px;
+	height: 80px;
+}
+
+.user-edit-label {
+	width: 40px;
+	padding-right:15px;
+	color:#5f5d60;
+}
+
+.user-edit-item {
+	padding-bottom: 25px;
+}
+
+.file-upload-form {
+	padding-top: 10px;
+}
+
+
+.user-name-box {
+	width: 150px;
+	height: 15px;
+	padding: 2px;
+	font-size: 13px
+}
+
+.self-intro {
+	width: 500px;
+	height: 300px;
+	padding: 8px 12px;
+	border: 1px solid #d5d5d5;
+	font-size: 13px;
+}
+
+.user-edit-input {
+	vertical-align:middle;
+}
+
+.user-edit-select,.user-edit-name {
+	height: 23px;
+	font-size: 14px
+}
+
+.user-edit-name {
+	width: 180px;
+}
+
+.edit-btn,.edit-back-btn {
+  display:inline-block;
+  margin-top: 40px;
+  margin-right: 20px;
+  font-size: 13px;
+  color: white;
+  opacity: 0.8;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.edit-btn {
+  background-color: var(--main-color);
+  padding: 14px 30px;
+}
+.edit-back-btn {
+	background-color:#c2c4c3;
+	padding: 14px 15px;
+	text-decoration:none;
+}
+.edit-btn:hover,.edit-back-btn:hover {
+	opacity: 1.0;
+}
+
+
+
+/*----------------teacherEdit---------------*/
+.teacher-edit-wrapper {
+  height: 1000px;
+  padding-top: 40px;
+  background-color: #f4f8fa;
+}
+
+.teacher-edit-form {
+  width: 1000px;
+  padding: 50px 0;
+  margin: 0 auto;
+  text-align: center;
+  background-color: #f7f7f7;
+  border-top: solid 5px #dee7ec;
+  box-shadow: 0px 5px 2px rgba(30,30,30,0.1);
+}
+
+.teacher-edit-item {
+	padding-bottom: 25px;
+}
+
+.subject-items {
+	width: 70%;
+	margin:0 auto;
+	text-align:start;
+	padding-left: 60px;
+}
+
+.subject-item {
+  display:inline-block;
+  width: 110px;
+}
+
+.teacher-edit-label {
+	padding:0 20px 10px;
+	color:#5f5d60;
+}
+
+.teacher-edit-table {
+	text-align: center;
+	margin:0 auto;
+}
+
+.teacher-edit-table .day-of-the-week {
+	width: 85px;
+}
+
+.teacher-edit-table th {
+	color:#5f5d60;
+	font-weight: normal;
+}
+.teacher-edit-table tr {
+	height: 33px;
+}
+	
+	
+/*-------------message-box------------------*/
+.message-box-wrapper {
+  padding: 80px 0;
+  min-height: 500px;
+  background-color: #f4f8fa;
+}
+
+.message-box {
+  width: 600px;
+  height: 80px;
+  padding: 20px 20px;
+  margin: 30px auto;
+  background-color: #f7f7f7;
+  border: 1px solid #d5d5d5;
+  box-shadow: 0px 5px 2px rgba(30,30,30,0.1);
+  position: relative;
+}
+
+.message-empty {
+	text-align:center;
+	padding: 30px 0;
+	font-size: 20px;
+	color:#5f5d60;
+	
+}
+
+.message-box :hover {
+	background-color: rgba(0,0,0,0.1);
+}
+
+.message-box a {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.message-box-title {
+  padding-bottom: 10px;
+  border-bottom: 2px solid #dee7ec;
+  text-align:center;
+  font-size: 28px;
+  font-family:"Hiragino Kaku Gothic ProN";
+  color:#5f5d60;
+}
+
+.message-box p {
+	color:#5f5d60;
+}
+
+.message-box-header {
+	display:flex;
+}
+
+.message-box-image {
+	border-radius: 50%;
+	width: 30px;
+	height: 30px;
+	margin-right: 20px;
+}
+
+.message-box-user-name {
+	height: 30px;
+	padding-right: 20px;
+	margin:0;
+}
+
+.message-box-time {
+	height: 30px;
+	margin:0;
+}
+
+.message-box-content {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/*-------------message-----------------*/
+
+.message-wrapper {
+  padding: 80px 0;
+  min-height: 500px;
+  background-color: #f4f8fa;
+}
+
+.message-send-form {
+	width: 600px;
+	height: 400px;
+	margin: 0 auto;
+}
+
+.message-send-form textarea {
+	height: 200px;
+	width: 600px;
+	padding: 10px;
+	font-size: 14px;
+}
+
+.message-btn {
+	margin-top:10px;
+	padding:14px 45px;
+	border-radius: 40px;
+    border: 2px solid #5D9AB2;
+    text-align:center;
+    color: var(--main-color);
+    text-decoration: none;
+    background: #fff;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 15px;
+}
+
+.message-btn-wrapper {
+	text-align:center;
+}
+
+.message-btn:hover {
+	color: #fff;
+	background:var(--main-color);
+}
+
+
+.message {
+  width: 600px;
+  min-height: 80px;
+  padding: 20px 20px;
+  margin: 30px auto;
+  background-color: #f7f7f7;
+  border: 1px solid #d5d5d5;
+  box-shadow: 0px 5px 2px rgba(30,30,30,0.1);
+}
+
+.message-title {
+  padding-bottom: 10px;
+  border-bottom: 2px solid #dee7ec;
+  text-align:center;
+  font-size: 28px;
+  font-family:"Hiragino Kaku Gothic ProN";
+  color:#5f5d60;
+}
+
+.message-header {
+	display:flex;
+}
+
+.message-image {
+	border-radius: 50%;
+	width: 30px;
+	height: 30px;
+	margin-right: 20px;
+}
+
+.message-user-name {
+	height: 30px;
+	padding-right: 20px;
+	margin:0;
+}
+
+.message-time {
+	height: 30px;
+	margin:0;
+}
+
+.message-content {
+	padding-top: 10px;
+	padding-left:50px;
+	color: #5f5d60;
+}
+
+.msg-err {
+	color: red;
+	font-size:16px;
+}
+
+/*------------- tutor------------------ */
+.tutor-wrapper {
+	padding:40px 120px;
+	min-height: 500px;
+	background-color: #f4f8fa;
+}
+
+.tutor-wrapper h2{
+	color:#5f5d60;
+	margin-top: 18px;
+	margin-bottom: 8px;
+}
+
+
+.tutor-btn {
+	padding:5px 15px;
+	margin-right: 10px;
+	min-width: 90px;
+	border-radius: 40px;
+    border: 2px solid #5D9AB2;
+    text-align:center;
+    position: relative;
+    cursor:pointer;
+    color: var(--main-color);
+    text-decoration: none;
+    background: #fff;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 11px;
+}
+
+
+.tutor-btn:hover {
+	color: #fff;
+	background:var(--main-color);
+}
+
+.tutor-card-image {
+	width: 60px;
+	height: 60px;
+	border-radius: 50%;
+}
+
+.tutor-card-left {
+	padding: 10px;
+}
+
+.tutor-form-label {
+	width: 40px;
+	padding-right:5px;
+	color:#5f5d60;
+}
+
+/* ------------- tutor application ----------------*/
+.top-wrapper h1,.top-wrapper h2 {
+	color:#5f5d60;
+}
+
+.tutor-application-form {
+	display:flex;
+	height: 40px;
+}
+
+.tutor-application-form p{
+	line-height: 1;
+	padding:0 5px;
+}
+
+.tutor-select-box {
+	width: 25%;
+}
+
+.tutor-application-btn {
+	margin-left: 10px;
+}
+
+
+
+
+

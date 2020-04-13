@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<meta name="_csrf" th:content="${_csrf.token}"/>
+<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+<title>Insert title here</title>
+<link
+	href="https://fonts.googleapis.com/css?family=Montserrat&display=swap"
+	rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css"
+	integrity="sha256-UzFD2WYH2U1dQpKDjjZK72VtPeWP50NoJjd26rnAdUI="
+	crossorigin="anonymous" />
+<script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
+</head>
+<body th:with="user=${#authentication.principal.user}">
+	<h1>生徒情報編集画面</h1>
+	<form th:action="@{/profile/studentEdit/}" th:object="${studentEditForm}" 
+		method="post">
+			<table>
+				<tr>
+					<td><label for="ageClass">年齢区分:</label></td>
+					<td><select id="ageClass" name="ageClass">
+						<option value="" selected>選択してください</option>
+    					<option th:each="ageClass : ${ageClassList}" 
+    						th:value="${ageClass}" th:text="${ageClass}" th:selected="${ageClass==student?.ageClass}">
+    					</option>
+					</select>
+				</tr>
+				<tr>
+					<td><label for="request">教師への要望(最大300文字)</label></td>
+					<td><textarea name="request" th:errorclass="err" th:text="${student?.request}">
+						</textarea>
+						<div class="err" th:each="err,st : ${#lists.sort(#fields.errors('request'))}"
+     						th:text="${err}" th:if="${st.index == 0}">エラーメッセージが出力されます
+     					</div>
+					</td>
+				</tr>
+				<tr>
+					<td><a th:href="@{'/profile/'+${user.userId}}">プロフィール画面に戻る</a></td>
+					<td>
+						<input type="submit" value="プロフィールを変更" />
+					</td>
+				</tr>
+			</table>
+	</form>	
+	<footer th:include="login/index::footer"></footer>
+	<script src="/js/script.js"></script>
+</body>
+</html>
